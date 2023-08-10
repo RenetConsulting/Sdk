@@ -47,5 +47,5 @@ jobs:
 
     - name: Publish NuGet Files
       run: |
-          dotnet nuget push "./nuget/Sdk.Communication/*.nupkg" --source "renet-packages" --api-key ${{ secrets.ACTION_PACKAGE_API_KEY }}
-          dotnet nuget push "./nuget/Sdk.Communication.Azure/*.nupkg" --source "renet-packages" --api-key ${{ secrets.ACTION_PACKAGE_API_KEY }}
+          dotnet nuget push "./nuget/Sdk.Communication/*.nupkg" --source "nuget.org" --api-key ${{ secrets.ACTION_PACKAGE_API_KEY }}
+          dotnet nuget push "./nuget/Sdk.Communication.Azure/*.nupkg" --source "nuget.org" --api-key ${{ secrets.ACTION_PACKAGE_API_KEY }}

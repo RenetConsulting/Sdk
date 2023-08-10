@@ -3,6 +3,7 @@
   <PropertyGroup>
 	  <TargetFramework>net6.0</TargetFramework>
 	  <PackageId>RenetConsulting.$(AssemblyName)</PackageId>
+	  <PackageReadmeFile>README.md</PackageReadmeFile>
 	  <Title>Azure Communication SDK </Title>
 	  <Product>RenetConsulting.$(AssemblyName)</Product>
 	  <AssemblyName>RenetConsulting.$(MSBuildProjectName)</AssemblyName>
@@ -13,10 +14,15 @@
 	  <GenerateAssemblyVersionAttribute>false</GenerateAssemblyVersionAttribute>
 	  <ImplicitUsings>enable</ImplicitUsings>
 	  <Nullable>enable</Nullable>
+	  <Authors>Renet Consulting, Inc.</Authors>
+	  <Copyright>© Copyright (c) Renet Consulting, Inc. All right reserved. Licensed under the MIT.</Copyright>
+	  <PackageProjectUrl>https://github.com/RenetConsulting/Sdk</PackageProjectUrl>
+	  <RepositoryUrl>https://github.com/RenetConsulting/Sdk</RepositoryUrl>
   </PropertyGroup>
 
   <ItemGroup>
     <None Include="..\.editorconfig" Link=".editorconfig" />
+    <None Include="..\README.md" Link="README.md" />
   </ItemGroup>
 
   <ItemGroup>

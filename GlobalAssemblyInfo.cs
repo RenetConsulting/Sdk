@@ -7,6 +7,6 @@
 // This shows up as Product Version in Windows Explorer
 // We make this the same for all files in a particular product version. And increment it globally for all projects.
 // We then use this as the Product Version in installers as well (for example built using Wix).
-[assembly: AssemblyInformationalVersion("1.1.0")]
-[assembly: AssemblyVersion("1.1.0")]
-[assembly: AssemblyFileVersion("1.1.0")]
+[assembly: AssemblyInformationalVersion("1.1.1")]
+[assembly: AssemblyVersion("1.1.1")]
+[assembly: AssemblyFileVersion("1.1.1")]

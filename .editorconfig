@@ -1,0 +1,4 @@
+root=true
+# All files
+[*]
+file_header_template=© Copyright (c) Renet Consulting, Inc. All right reserved.\nLicensed under the MIT.

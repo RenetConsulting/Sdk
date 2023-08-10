@@ -19,12 +19,13 @@
 	  <Copyright>© Copyright (c) Renet Consulting, Inc. All right reserved. Licensed under the MIT.</Copyright>
 	  <PackageProjectUrl>https://github.com/RenetConsulting/Sdk</PackageProjectUrl>
 	  <RepositoryUrl>https://github.com/RenetConsulting/Sdk</RepositoryUrl>
+	  <PackageLicenseExpression>MIT</PackageLicenseExpression>
   </PropertyGroup>
 
   <ItemGroup>
     <None Include="..\.editorconfig" Link=".editorconfig" />
     <None Include="..\README.md" Link="README.md" Pack="true" PackagePath="\" />
-	<None Include="..\LICENSE" Link="LICENSE"  Pack="true" PackagePath="\" />
+	<None Include="..\LICENSE" Link="LICENSE"  Pack="true" PackagePath="LICENSE" />
   </ItemGroup>
 
   <ItemGroup>

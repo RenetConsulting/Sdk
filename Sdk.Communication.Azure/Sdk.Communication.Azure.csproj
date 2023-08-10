@@ -4,6 +4,7 @@
 	  <TargetFramework>net6.0</TargetFramework>
 	  <PackageId>RenetConsulting.$(AssemblyName)</PackageId>
 	  <PackageReadmeFile>README.md</PackageReadmeFile>
+	  <PackageLicenseFile>LICENSE</PackageLicenseFile>
 	  <Title>Azure Communication SDK </Title>
 	  <Product>RenetConsulting.$(AssemblyName)</Product>
 	  <AssemblyName>RenetConsulting.$(MSBuildProjectName)</AssemblyName>
@@ -23,6 +24,7 @@
   <ItemGroup>
     <None Include="..\.editorconfig" Link=".editorconfig" />
     <None Include="..\README.md" Link="README.md" Pack="true" PackagePath="\" />
+	<None Include="..\LICENSE" Link="LICENSE"  Pack="true" PackagePath="\" />
   </ItemGroup>
 
   <ItemGroup>

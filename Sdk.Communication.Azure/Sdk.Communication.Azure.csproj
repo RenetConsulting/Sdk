@@ -19,7 +19,7 @@
 	  <Copyright>© Copyright (c) Renet Consulting, Inc. All right reserved. Licensed under the MIT.</Copyright>
 	  <PackageProjectUrl>https://github.com/RenetConsulting/Sdk</PackageProjectUrl>
 	  <RepositoryUrl>https://github.com/RenetConsulting/Sdk</RepositoryUrl>
-	  <PackageLicenseExpression>MIT</PackageLicenseExpression>
+
   </PropertyGroup>
 
   <ItemGroup>

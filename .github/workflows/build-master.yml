@@ -1,0 +1,50 @@
+name: Sdk - Main
+
+on:
+  push:
+    branches:
+      - main
+
+env:
+  DOTNET_VERSION: '6.0.x'           # set this to the dotnet version to use
+  SDK_VERSION: '1.1.1'
+  BUILD_NUMBER: ${{github.run_number}}
+
+# --- Secrets for the GitHub Action ---
+# ACTION_PACKAGE_API_KEY - this key for Nuget Deployment
+# _______________________________________________________
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+
+    - name: Crete Build number
+      id: build
+      run: |
+          echo "VERSION_NUMBER_WITH_OFFSET=$SDK_VERSION.$(($BUILD_NUMBER+10000))" >> "$GITHUB_ENV"
+
+    - uses: actions/checkout@v3
+    
+    - name: Setup .NET Core ${{ env.DOTNET_VERSION }}
+      uses: actions/setup-dotnet@v3
+      with:
+        dotnet-version: ${{ env.DOTNET_VERSION }}
+
+    - name: Build with dotnet
+      run: dotnet build ./RenetConsulting.Sdk.sln --configuration Release
+      
+    - name: Test with dotnet
+      run: dotnet test ./RenetConsulting.Sdk.sln --configuration Release  --no-build
+
+    - name: Build nuget packages
+      run: |
+        dotnet pack ./Sdk.Communication/Sdk.Communication.csproj -p:PackageVersion=${{ env.VERSION_NUMBER_WITH_OFFSET }} --no-build --configuration Release --output "./nuget/Sdk.Communication"
+        dotnet pack ./Sdk.Communication.Azure/Sdk.Communication.Azure.csproj -p:PackageVersion=${{ env.VERSION_NUMBER_WITH_OFFSET }} --no-build --configuration Release --output "./nuget/Sdk.Communication.Azure"
+
+    - name: Publish NuGet Files
+      run: |
+          dotnet nuget push "./nuget/Sdk.Communication/*.nupkg" --source "nuget.org" --api-key ${{ secrets.ACTION_PACKAGE_API_KEY }}
+          dotnet nuget push "./nuget/Sdk.Communication.Azure/*.nupkg" --source "nuget.org" --api-key ${{ secrets.ACTION_PACKAGE_API_KEY }}

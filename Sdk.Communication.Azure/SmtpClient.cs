@@ -57,7 +57,7 @@ namespace Sdk.Communication.Azure
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex.Message, ex);
+                _logger.LogError(ex, "{message}", ex.Message);
                 throw;
             }
 

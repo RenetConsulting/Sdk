@@ -5,7 +5,10 @@ using Azure;
 using Azure.Communication.Email;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
+using System;
+using System.Collections.Generic;
 using System.Net.Mail;
+using System.Threading.Tasks;
 
 namespace Sdk.Communication.Azure
 {
@@ -30,8 +33,8 @@ namespace Sdk.Communication.Azure
                 emailAddresses.Add(item.ToEmailAddress());
             }
 
-            EmailRecipients emailRecipients = new(emailAddresses);
-            EmailContent emailContent = new(message.Subject);
+            EmailRecipients emailRecipients = new EmailRecipients(emailAddresses);
+            EmailContent emailContent = new EmailContent(message.Subject);
             if (message.IsBodyHtml)
             {
                 emailContent.Html = message.Body;
@@ -41,7 +44,7 @@ namespace Sdk.Communication.Azure
                 emailContent.PlainText = message.Body;
             }
 
-            EmailMessage emailMessage = new(message?.From?.Address, emailRecipients, emailContent);
+            EmailMessage emailMessage = new EmailMessage(message?.From?.Address, emailRecipients, emailContent);
 
             try
             {

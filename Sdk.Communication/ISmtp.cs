@@ -3,7 +3,10 @@
 
 namespace Sdk.Communication
 {
+    using System;
     using System.Net.Mail;
+    using System.Threading.Tasks;
+
     /// <summary>
     /// The ISmtp is the default interface for email communications
     /// </summary>

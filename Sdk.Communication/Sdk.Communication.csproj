@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-	  <TargetFramework>net6.0</TargetFramework>
+	  <TargetFramework>netcoreapp3.1</TargetFramework>
 	  <PackageId>RenetConsulting.$(AssemblyName)</PackageId>
 	  <PackageReadmeFile>README.md</PackageReadmeFile>
 	  <PackageLicenseFile>LICENSE</PackageLicenseFile>
@@ -13,7 +13,6 @@
 	  <GenerateAssemblyFileVersionAttribute>false</GenerateAssemblyFileVersionAttribute>
 	  <GenerateAssemblyInformationalVersionAttribute>false</GenerateAssemblyInformationalVersionAttribute>
 	  <GenerateAssemblyVersionAttribute>false</GenerateAssemblyVersionAttribute>
-	  <ImplicitUsings>enable</ImplicitUsings>
 	  <Nullable>enable</Nullable>
 	  <Authors>Renet Consulting, Inc.</Authors>
 	  <Copyright>© Copyright (c) Renet Consulting, Inc. All right reserved. Licensed under the MIT.</Copyright>
@@ -29,7 +28,7 @@
 
 	<ItemGroup>
 	  <None Include="..\.editorconfig" Link=".editorconfig" />
-	  <None Include="..\LICENSE" Link="LICENSE"  Pack="true" PackagePath="\" />
+	  <None Include="..\LICENSE" Link="LICENSE" Pack="true" PackagePath="\" />
 	  <None Include="..\README.md" Link="README.md" Pack="true" PackagePath="\" />
 	</ItemGroup>
 

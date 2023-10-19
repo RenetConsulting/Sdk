@@ -14,6 +14,11 @@ namespace Sdk.Communication.Azure
         /// </summary>
         public string UserAssignedClientId { get; set; } = string.Empty;
 
+        /// <summary>
+        /// Gets or sets Communication Endpoint like https://my-resource.communication.azure.com
+        /// </summary>
+        public string CommunicationEndpoint { get; set; } = string.Empty;
+
         public bool WaitUntilCompleted { get; set; } = false;
     }
 }

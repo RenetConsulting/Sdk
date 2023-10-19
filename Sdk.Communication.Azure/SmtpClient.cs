@@ -63,8 +63,6 @@ namespace Sdk.Communication.Azure
                 _logger.LogError(ex, "{message}", ex.Message);
                 throw;
             }
-
-
         }
     }
 }

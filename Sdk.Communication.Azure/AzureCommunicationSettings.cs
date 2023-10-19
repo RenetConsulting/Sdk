@@ -9,7 +9,11 @@ namespace Sdk.Communication.Azure
     {
         public string CommunicationServicesConnectionString { get; set; } = string.Empty;
 
-        public bool WaitUntilCompleted { get; set; } = false;
+        /// <summary>
+        /// Gets or sets Azure UserAssigned ClientId.
+        /// </summary>
+        public string UserAssignedClientId { get; set; } = string.Empty;
 
+        public bool WaitUntilCompleted { get; set; } = false;
     }
 }

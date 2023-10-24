@@ -26,7 +26,7 @@ namespace Sdk.Communication.Azure
         }
 
         /// <summary>
-        /// Method for sending SMS messages through Azure.
+        /// Method for sending an array of SMS messages through Azure.
         /// </summary>
         /// <param name="connectionString">The connection string to the Azure SMS service.</param>
         /// <param name="fromPhoneNumber">The sender's phone number for SMS.</param>
@@ -59,6 +59,40 @@ namespace Sdk.Communication.Azure
                 }
 
                 return smsSendingResults;
+            }
+            catch (System.Exception ex)
+            {
+                _logger.LogError(ex, "{message}", ex.Message);
+
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Method for sending one SMS messages through Azure.
+        /// </summary>
+        /// <param name="connectionString">The connection string to the Azure SMS service.</param>
+        /// <param name="fromPhoneNumber">The sender's phone number for SMS.</param>
+        /// <param name="toPhoneNumbers">An array of recipient phone numbers for SMS.</param>
+        /// <param name="message">The text of the SMS message.</param>
+        /// <returns>SMS sending result.</returns>
+        public SMSSendResult SendSms(string connectionString, string fromPhoneNumber, string toPhoneNumbers, string message)
+        {
+            SmsClient smsClient = new SmsClient(connectionString);
+
+            try
+            {
+                SmsSendResult response = smsClient.Send(fromPhoneNumber, toPhoneNumbers, message, new SmsSendOptions(true) { Tag = "verification" });
+
+                var sendingResult = new SMSSendResult
+                {
+                    MessageId = response.MessageId,
+                    CustomerName = response.To,
+                    Result = response.Successful,
+                    ErrorMessage = response.ErrorMessage
+                };
+
+                return sendingResult;
             }
             catch (System.Exception ex)
             {

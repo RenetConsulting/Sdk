@@ -22,6 +22,7 @@ namespace Sdk.Communication.Azure
         /// Constructor for the AzureSMSService class.
         /// </summary>
         /// <param name="logger">An instance of ILogger for logging events.</param>
+        /// <param name="azureSmsServiceSettings">An settings class to setup azure sms sending data.</param>
         public AzureSMSService(ILogger<AzureSMSService> logger, IOptions<AzureSmsServiceSettings> azureSmsServiceSettings)
         {
             _logger = logger;

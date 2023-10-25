@@ -8,6 +8,7 @@ namespace Sdk.Communication.Azure
     using global::Azure;
     using global::Azure.Communication.Sms;
     using Microsoft.Extensions.Logging;
+    using Microsoft.Extensions.Options;
 
     /// <summary>
     /// The AzureSMSService class represents a service for sending SMS messages through Azure.
@@ -15,33 +16,33 @@ namespace Sdk.Communication.Azure
     public class AzureSMSService : ISmsService
     {
         private readonly ILogger<AzureSMSService> _logger;
+        private readonly AzureSmsServiceSettings _azureSmsServiceSettings;
 
         /// <summary>
         /// Constructor for the AzureSMSService class.
         /// </summary>
         /// <param name="logger">An instance of ILogger for logging events.</param>
-        public AzureSMSService(ILogger<AzureSMSService> logger)
+        public AzureSMSService(ILogger<AzureSMSService> logger, IOptions<AzureSmsServiceSettings> azureSmsServiceSettings)
         {
             _logger = logger;
+            _azureSmsServiceSettings = azureSmsServiceSettings.Value;
         }
 
         /// <summary>
         /// Method for sending an array of SMS messages through Azure.
         /// </summary>
-        /// <param name="connectionString">The connection string to the Azure SMS service.</param>
-        /// <param name="fromPhoneNumber">The sender's phone number for SMS.</param>
         /// <param name="toPhoneNumbers">An array of recipient phone numbers for SMS.</param>
         /// <param name="message">The text of the SMS message.</param>
         /// <returns>A collection of SMS sending results.</returns>
-        public IEnumerable<SMSSendResult> SendSms(string connectionString, string fromPhoneNumber, string[] toPhoneNumbers, string message)
+        public IEnumerable<SMSSendResult> SendSms(string[] toPhoneNumbers, string message)
         {
             List<SMSSendResult> smsSendingResults = new List<SMSSendResult>();
 
-            SmsClient smsClient = new SmsClient(connectionString);
+            SmsClient smsClient = new SmsClient(_azureSmsServiceSettings.ConnectionString);
 
             try
             {
-                Response<IReadOnlyList<SmsSendResult>> response = smsClient.Send(fromPhoneNumber, toPhoneNumbers, message, new SmsSendOptions(true) { Tag = "verification" });
+                Response<IReadOnlyList<SmsSendResult>> response = smsClient.Send(_azureSmsServiceSettings.FromPhoneNumber, toPhoneNumbers, message, new SmsSendOptions(true) { Tag = "verification" });
 
                 IEnumerable<SmsSendResult> smsSendResults = response.Value;
 
@@ -71,18 +72,16 @@ namespace Sdk.Communication.Azure
         /// <summary>
         /// Method for sending one SMS messages through Azure.
         /// </summary>
-        /// <param name="connectionString">The connection string to the Azure SMS service.</param>
-        /// <param name="fromPhoneNumber">The sender's phone number for SMS.</param>
         /// <param name="toPhoneNumbers">An array of recipient phone numbers for SMS.</param>
         /// <param name="message">The text of the SMS message.</param>
         /// <returns>SMS sending result.</returns>
-        public SMSSendResult SendSms(string connectionString, string fromPhoneNumber, string toPhoneNumbers, string message)
+        public SMSSendResult SendSms(string toPhoneNumbers, string message)
         {
-            SmsClient smsClient = new SmsClient(connectionString);
+            SmsClient smsClient = new SmsClient(_azureSmsServiceSettings.ConnectionString);
 
             try
             {
-                SmsSendResult response = smsClient.Send(fromPhoneNumber, toPhoneNumbers, message, new SmsSendOptions(true) { Tag = "verification" });
+                SmsSendResult response = smsClient.Send(_azureSmsServiceSettings.FromPhoneNumber, toPhoneNumbers, message, new SmsSendOptions(true) { Tag = "verification" });
 
                 var sendingResult = new SMSSendResult
                 {

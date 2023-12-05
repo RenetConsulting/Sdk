@@ -17,6 +17,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sdk.Communication.Azure", "
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sdk.Communication.Azure.Test", "Sdk.Communication.Azure.Test\Sdk.Communication.Azure.Test.csproj", "{11C466CA-74F7-4878-9418-3B7A5F8796DE}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sdk.Communication.Aws", "Sdk.Communication.Aws\Sdk.Communication.Aws.csproj", "{A5FDB443-1722-4A7B-9293-6B65A2EB18F2}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -35,6 +37,10 @@ Global
 		{11C466CA-74F7-4878-9418-3B7A5F8796DE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{11C466CA-74F7-4878-9418-3B7A5F8796DE}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{11C466CA-74F7-4878-9418-3B7A5F8796DE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A5FDB443-1722-4A7B-9293-6B65A2EB18F2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A5FDB443-1722-4A7B-9293-6B65A2EB18F2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A5FDB443-1722-4A7B-9293-6B65A2EB18F2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A5FDB443-1722-4A7B-9293-6B65A2EB18F2}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

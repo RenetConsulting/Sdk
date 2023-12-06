@@ -2,9 +2,29 @@
 
   <PropertyGroup>
     <TargetFramework>net8.0</TargetFramework>
-    <ImplicitUsings>enable</ImplicitUsings>
+	  <PackageId>RenetConsulting.$(AssemblyName)</PackageId>
+	  <PackageReadmeFile>README.md</PackageReadmeFile>
+	  <PackageLicenseFile>LICENSE</PackageLicenseFile>
+	  <Title>Azure Communication SDK </Title>
+	  <Product>RenetConsulting.$(AssemblyName)</Product>
+	  <AssemblyName>RenetConsulting.$(MSBuildProjectName)</AssemblyName>
+	  <GenerateAssemblyCompanyAttribute>false</GenerateAssemblyCompanyAttribute>
+	  <GenerateAssemblyCopyrightAttribute>false</GenerateAssemblyCopyrightAttribute>
+	  <GenerateAssemblyFileVersionAttribute>false</GenerateAssemblyFileVersionAttribute>
+	  <GenerateAssemblyInformationalVersionAttribute>false</GenerateAssemblyInformationalVersionAttribute>
+	  <GenerateAssemblyVersionAttribute>false</GenerateAssemblyVersionAttribute>
+	  <Authors>Renet Consulting, Inc.</Authors>
+	  <Copyright>© Copyright (c) Renet Consulting, Inc. All right reserved. Licensed under the MIT.</Copyright>
+	  <PackageProjectUrl>https://github.com/RenetConsulting/Sdk</PackageProjectUrl>
+	  <RepositoryUrl>https://github.com/RenetConsulting/Sdk</RepositoryUrl>
+	  <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
   </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Include="..\GlobalAssemblyInfo.cs" Link="GlobalAssemblyInfo.cs" />
+    <Compile Include="..\GlobalSuppressions.cs" Link="GlobalSuppressions.cs" />
+  </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="AWSSDK.Pinpoint" Version="3.7.300.11" />

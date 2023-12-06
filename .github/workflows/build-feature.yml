@@ -7,7 +7,7 @@ on:
 
 env:
   DOTNET_VERSION: '6.0.x'           # set this to the dotnet version to use
-  SDK_VERSION: '1.1.2'
+  SDK_VERSION: '1.1.4'
   BUILD_NUMBER: ${{github.run_number}}
 
 # --- Secrets for the GitHub Action ---

@@ -27,6 +27,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Include="..\LICENSE" Link="LICENSE" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="AWSSDK.Pinpoint" Version="3.7.300.11" />
     <PackageReference Include="Microsoft.Extensions.Logging" Version="8.0.0" />
   </ItemGroup>

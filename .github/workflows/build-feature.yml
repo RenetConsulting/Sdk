@@ -43,9 +43,11 @@ jobs:
       run: |
         dotnet pack ./Sdk.Communication/Sdk.Communication.csproj -p:PackageVersion=${{ env.VERSION_NUMBER_WITH_OFFSET }} --no-build --configuration Release --output "./nuget/Sdk.Communication"
         dotnet pack ./Sdk.Communication.Azure/Sdk.Communication.Azure.csproj -p:PackageVersion=${{ env.VERSION_NUMBER_WITH_OFFSET }} --no-build --configuration Release --output "./nuget/Sdk.Communication.Azure"
+        dotnet pack ./Sdk.Communication.Aws/Sdk.Communication.Aws.csproj -p:PackageVersion=${{ env.VERSION_NUMBER_WITH_OFFSET }} --no-build --configuration Release --output "./nuget/Sdk.Communication.Aws"
 
 
     - name: Publish NuGet Files
       run: |
           dotnet nuget push "./nuget/Sdk.Communication/*.nupkg" --source "nuget.org" --api-key ${{ secrets.ACTION_PACKAGE_API_KEY }}
           dotnet nuget push "./nuget/Sdk.Communication.Azure/*.nupkg" --source "nuget.org" --api-key ${{ secrets.ACTION_PACKAGE_API_KEY }}
+          dotnet nuget push "./nuget/Sdk.Communication.Aws/*.nupkg" --source "nuget.org" --api-key ${{ secrets.ACTION_PACKAGE_API_KEY }}

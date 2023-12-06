@@ -5,7 +5,7 @@ using Amazon.Pinpoint;
 using Amazon.Pinpoint.Model;
 using Microsoft.Extensions.Logging;
 
-namespace Sdk.Communication.Aws1
+namespace Sdk.Communication.Aws
 {
     public class PhoneService(ILogger<PhoneService> logger, AmazonPinpointClient phoneClient) : IPhone
     {

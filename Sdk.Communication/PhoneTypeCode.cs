@@ -10,6 +10,9 @@ namespace Sdk.Communication
         Voip = 2,
         Invalid = 3,
         Other = 4,
-        Prepaid = 5
+        Prepaid = 5,
+        TollFree = 6,
+        Premium = 7,
+        Fake = 8,
     }
 }

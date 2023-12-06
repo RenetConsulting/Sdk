@@ -5,7 +5,7 @@
 	  <PackageId>RenetConsulting.$(AssemblyName)</PackageId>
 	  <PackageReadmeFile>README.md</PackageReadmeFile>
 	  <PackageLicenseFile>LICENSE</PackageLicenseFile>
-	  <Title>Azure Communication SDK </Title>
+	  <Title>Aws Communication SDK </Title>
 	  <Product>RenetConsulting.$(AssemblyName)</Product>
 	  <AssemblyName>RenetConsulting.$(MSBuildProjectName)</AssemblyName>
 	  <GenerateAssemblyCompanyAttribute>false</GenerateAssemblyCompanyAttribute>
@@ -27,7 +27,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Include="..\.editorconfig" Link=".editorconfig" />
     <None Include="..\LICENSE" Link="LICENSE" />
+    <None Include="..\README.md" Link="README.md" />
   </ItemGroup>
 
   <ItemGroup>

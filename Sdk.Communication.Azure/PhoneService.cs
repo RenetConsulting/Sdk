@@ -9,12 +9,15 @@ namespace Sdk.Communication.Azure
 
     using global::Azure.Communication.PhoneNumbers;
     using Microsoft.Extensions.Logging;
+    using Microsoft.Extensions.Options;
 
     /* This service is not ready for production use */
-    public partial class PhoneService(ILogger<PhoneService> logger, PhoneNumbersClient phoneNumbersClient) : IPhone
+    public partial class PhoneService(ILogger<PhoneService> logger, IOptions<AzureSmsServiceSettings> azureSmsServiceSettings) : IPhone
     {
         public async Task<PhoneNumberValidateResponse> PhoneNumberValidateAsync(string phoneNumber)
         {
+            PhoneNumbersClient client = new(azureSmsServiceSettings.Value.ConnectionString, new PhoneNumbersClientOptions(PhoneNumbersClientOptions.ServiceVersion.V2023_05_01_Preview));
+
             Regex phoneNumberRegex = PhoneValidation();
 
             PhoneNumberValidateResponse phoneNumberValidateResponse = new();
@@ -28,7 +31,7 @@ namespace Sdk.Communication.Azure
 
             try
             {
-                OperatorInformationResult searchResult = await phoneNumbersClient.SearchOperatorInformationAsync(new[] { phoneNumber });
+                OperatorInformationResult searchResult = await client.SearchOperatorInformationAsync(new[] { phoneNumber });
 
                 if (searchResult != null && searchResult.Values != null && searchResult.Values.Count > 0)
                 {

@@ -3,6 +3,7 @@
 
 using Azure.Communication.PhoneNumbers;
 using Microsoft.Extensions.Logging;
+using System;
 using System.Threading.Tasks;
 
 namespace Sdk.Communication.Azure
@@ -10,32 +11,43 @@ namespace Sdk.Communication.Azure
     /* This service is not ready for production use */
     public class PhoneService(ILogger<PhoneService> logger, PhoneNumbersClient phoneNumbersClient) : IPhone
     {
-        private readonly ILogger<PhoneService> _logger = logger;
-        
-        // PhoneNumbersClient client = new PhoneNumbersClient(_azureCommunicationSettings.CommunicationServicesConnectionString, new PhoneNumbersClientOptions(PhoneNumbersClientOptions.ServiceVersion.V2023_05_01_Preview));
-        private readonly PhoneNumbersClient _phoneNumbersClient = phoneNumbersClient;
-
-
         public async Task<PhoneNumberValidateResponse> PhoneNumberValidateAsync(string phoneNumber)
         {
             PhoneNumberValidateResponse phoneNumberValidateResponse = new();
 
-            OperatorInformationResult searchResult = await _phoneNumbersClient.SearchOperatorInformationAsync(new[] { phoneNumber });
-            if (searchResult != null && searchResult.Values != null && searchResult.Values.Count > 0)
+            try
             {
-                OperatorInformation operatorInformation = searchResult.Values[0];
+                OperatorInformationResult searchResult = await phoneNumbersClient.SearchOperatorInformationAsync(new[] { phoneNumber });
 
-                phoneNumberValidateResponse.Carrier = operatorInformation.OperatorDetails.Name;
-                phoneNumberValidateResponse.PhoneType = operatorInformation.NumberType.HasValue ? operatorInformation.NumberType.Value.ToString() : string.Empty;
-                phoneNumberValidateResponse.CountryCodeIso2 = operatorInformation.IsoCountryCode;
-                phoneNumberValidateResponse.PhoneTypeCode = phoneNumberValidateResponse.PhoneType.ToLower() switch
+                if (searchResult != null && searchResult.Values != null && searchResult.Values.Count > 0)
                 {
-                    "mobile" => PhoneTypeCode.Mobile,
-                    // "geographic" => PhoneTypeCode.Voip, - The "geographic" is for both VOIP and Landline
-                    _ => PhoneTypeCode.Invalid,
-                };
+                    OperatorInformation operatorInformation = searchResult.Values[0];
+
+                    if (operatorInformation != null && operatorInformation.OperatorDetails != null)
+                    {
+                        phoneNumberValidateResponse.Carrier = operatorInformation.OperatorDetails.Name;
+                        phoneNumberValidateResponse.CountryCodeIso2 = operatorInformation.IsoCountryCode;
+
+                        if (operatorInformation.NumberType.HasValue)
+                        {
+                            string phoneType = operatorInformation.NumberType.Value.ToString();
+                            phoneNumberValidateResponse.PhoneType = phoneType;
+                            phoneNumberValidateResponse.PhoneTypeCode = phoneType.ToLower() switch
+                            {
+                                "mobile" => PhoneTypeCode.Mobile,
+                                _ => PhoneTypeCode.Invalid,
+                            };
+                        }
+                    }
+                }
             }
+            catch (Exception ex)
+            {
+                logger.LogError(ex, "Error while validating phone number: {PhoneNumber}", phoneNumber);
+            }
+
             return phoneNumberValidateResponse;
         }
     }
+
 }

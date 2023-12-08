@@ -59,6 +59,8 @@ namespace Sdk.Communication.Azure
             catch (Exception ex)
             {
                 logger.LogError(ex, "Error while validating phone number: {PhoneNumber}", phoneNumber);
+
+                throw;
             }
 
             return phoneNumberValidateResponse;

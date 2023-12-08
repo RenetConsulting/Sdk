@@ -8,5 +8,7 @@ namespace Sdk.Communication.Aws
         public required string AccessKeyId { get; set; }
 
         public required string AccessSecret { get; set; }
+
+        public required string Region { get; set; }
     }
 }

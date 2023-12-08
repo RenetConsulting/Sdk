@@ -1,6 +1,7 @@
 ﻿// © Copyright (c) Renet Consulting, Inc. All right reserved.
 // Licensed under the MIT.
 
+using Amazon;
 using Amazon.Pinpoint;
 using Amazon.Pinpoint.Model;
 using Microsoft.Extensions.Logging;
@@ -26,7 +27,9 @@ namespace Sdk.Communication.Aws
                     throw new Exception($"Invalid or fake phone number: {phoneNumber}");
                 }
 
-                AmazonPinpointClient amazonPinpointClient = new(awsSmsServiceSettings.Value.AccessKeyId, awsSmsServiceSettings.Value.AccessSecret);
+                var regionEndpoint = RegionEndpoint.GetBySystemName(awsSmsServiceSettings.Value.Region);
+
+                AmazonPinpointClient amazonPinpointClient = new(awsSmsServiceSettings.Value.AccessKeyId, awsSmsServiceSettings.Value.AccessSecret, regionEndpoint);
 
                 logger.LogInformation("Start PhoneNumberValidate method");
 

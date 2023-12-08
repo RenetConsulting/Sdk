@@ -23,9 +23,7 @@ namespace Sdk.Communication.Aws
 
                 if (!phoneNumberRegex.IsMatch(phoneNumber))
                 {
-                    logger.LogWarning("Invalid or fake phone number: {PhoneNumber}", phoneNumber);
-
-                    return phoneNumberValidateResponse;
+                    throw new Exception($"Invalid or fake phone number: {phoneNumber}");
                 }
 
                 AmazonPinpointClient amazonPinpointClient = new(awsSmsServiceSettings.Value.AccessKeyId, awsSmsServiceSettings.Value.AccessSecret);

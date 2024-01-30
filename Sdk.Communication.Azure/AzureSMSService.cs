@@ -16,34 +16,41 @@ namespace Sdk.Communication.Azure
     public class AzureSMSService : ISmsService
     {
         private readonly ILogger<AzureSMSService> _logger;
-        private readonly AzureSmsServiceSettings _azureSmsServiceSettings;
+        private readonly SmsClient _client;
+
 
         /// <summary>
-        /// Constructor for the AzureSMSService class.
+        /// Initializes a new instance of the AzureSMSService class.
         /// </summary>
-        /// <param name="logger">An instance of ILogger for logging events.</param>
-        /// <param name="azureSmsServiceSettings">An settings class to setup azure sms sending data.</param>
-        public AzureSMSService(ILogger<AzureSMSService> logger, IOptions<AzureSmsServiceSettings> azureSmsServiceSettings)
+        /// <param name="logger">The logger for capturing logs.</param>
+        /// <param name="smsClient">The client for sending SMS.</param>
+        public AzureSMSService(ILogger<AzureSMSService> logger, SmsClient smsClient)
         {
             _logger = logger;
-            _azureSmsServiceSettings = azureSmsServiceSettings.Value;
+            _client = smsClient;
         }
 
+
         /// <summary>
-        /// Method for sending an array of SMS messages through Azure.
+        /// Sends SMS to multiple phone numbers from a specified number.
         /// </summary>
-        /// <param name="toPhoneNumbers">An array of recipient phone numbers for SMS.</param>
-        /// <param name="message">The text of the SMS message.</param>
-        /// <returns>A collection of SMS sending results.</returns>
-        public IEnumerable<SMSSendResult> SendSms(string[] toPhoneNumbers, string message)
+        /// <param name="toPhoneNumbers">An array of phone numbers to which the SMS will be sent.</param>
+        /// <param name="message">The message to be sent.</param>
+        /// <param name="fromPhoneNumber">The phone number from which the SMS will be sent.</param>
+        /// <returns>
+        /// Returns an IEnumerable of SMSSendResult objects, each containing the following information:
+        /// - MessageId: The ID of the sent message.
+        /// - CustomerName: The phone number of the recipient.
+        /// - Result: True if the message was sent successfully; otherwise, false.
+        /// - ErrorMessage: An error message if the sending of the message failed; otherwise, null.
+        /// </returns>
+        public IEnumerable<SMSSendResult> SendSms(string[] toPhoneNumbers, string message, string fromPhoneNumber)
         {
             List<SMSSendResult> smsSendingResults = new List<SMSSendResult>();
 
-            SmsClient smsClient = new SmsClient(_azureSmsServiceSettings.ConnectionString);
-
             try
             {
-                Response<IReadOnlyList<SmsSendResult>> response = smsClient.Send(_azureSmsServiceSettings.FromPhoneNumber, toPhoneNumbers, message, new SmsSendOptions(true) { Tag = "verification" });
+                Response<IReadOnlyList<SmsSendResult>> response = _client.Send(fromPhoneNumber, toPhoneNumbers, message, new SmsSendOptions(true) { Tag = "verification" });
 
                 IEnumerable<SmsSendResult> smsSendResults = response.Value;
 
@@ -71,18 +78,24 @@ namespace Sdk.Communication.Azure
         }
 
         /// <summary>
-        /// Method for sending one SMS messages through Azure.
+        /// Sends an SMS message to the specified phone numbers.
         /// </summary>
-        /// <param name="toPhoneNumbers">An array of recipient phone numbers for SMS.</param>
-        /// <param name="message">The text of the SMS message.</param>
-        /// <returns>SMS sending result.</returns>
-        public SMSSendResult SendSms(string toPhoneNumbers, string message)
+        /// <param name="toPhoneNumbers">The phone numbers to send the SMS message to.</param>
+        /// <param name="message">The content of the SMS message.</param>
+        /// <param name="fromPhoneNumber">The phone number from which the SMS message will be sent.</param>
+        /// <returns>
+        /// <see cref="SMSSendResult"/> object containing the result of the SMS send operation.
+        /// The <see cref="SMSSendResult.MessageId"/> property contains the ID of the sent message.
+        /// The <see cref="SMSSendResult.CustomerName"/> property contains the name of the SMS message recipient.
+        /// The <see cref="SMSSendResult.Result"/> property indicates whether the send operation was successful.
+        /// The <see cref="SMSSendResult.ErrorMessage"/> property contains any error message in case the send operation failed.
+        /// </returns>
+        /// <exception cref="System.Exception">Thrown when an error occurs while sending the SMS message.</exception>
+        public SMSSendResult SendSms(string toPhoneNumbers, string message, string fromPhoneNumber)
         {
-            SmsClient smsClient = new SmsClient(_azureSmsServiceSettings.ConnectionString);
-
             try
             {
-                SmsSendResult response = smsClient.Send(_azureSmsServiceSettings.FromPhoneNumber, toPhoneNumbers, message, new SmsSendOptions(true) { Tag = "verification" });
+                SmsSendResult response = _client.Send(fromPhoneNumber, toPhoneNumbers, message, new SmsSendOptions(true) { Tag = "verification" });
 
                 var sendingResult = new SMSSendResult
                 {

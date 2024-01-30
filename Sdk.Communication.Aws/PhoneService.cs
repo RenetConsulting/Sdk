@@ -27,9 +27,9 @@ namespace Sdk.Communication.Aws
                     throw new Exception($"Invalid or fake phone number: {phoneNumber}");
                 }
 
-                var regionEndpoint = RegionEndpoint.GetBySystemName(awsSmsServiceSettings.Value.Region);
+                var regionEndpoint = RegionEndpoint.GetBySystemName(awsSmsServiceSettings.Value.REGION);
 
-                AmazonPinpointClient amazonPinpointClient = new(awsSmsServiceSettings.Value.AccessKeyId, awsSmsServiceSettings.Value.AccessSecret, regionEndpoint);
+                AmazonPinpointClient amazonPinpointClient = new(awsSmsServiceSettings.Value.ACCESS_KEY_ID, awsSmsServiceSettings.Value.SECRET_ACCESS_KEY, regionEndpoint);
 
                 logger.LogInformation("Start PhoneNumberValidate method");
 

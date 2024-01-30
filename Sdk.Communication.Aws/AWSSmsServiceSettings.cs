@@ -5,10 +5,10 @@ namespace Sdk.Communication.Aws
 {
     public class AWSSmsServiceSettings
     {
-        public required string AccessKeyId { get; set; }
+        public required string ACCESS_KEY_ID { get; set; }
 
-        public required string AccessSecret { get; set; }
+        public required string SECRET_ACCESS_KEY { get; set; }
 
-        public required string Region { get; set; }
+        public required string REGION { get; set; }
     }
 }

@@ -27,7 +27,7 @@ jobs:
       run: |
           echo "VERSION_NUMBER_WITH_OFFSET=$SDK_VERSION$BETA.$(($BUILD_NUMBER))" >> "$GITHUB_ENV"
 
-    - uses: actions/checkout@v3
+    - uses: actions/checkout@v5
     
     - name: Setup .NET Core ${{ env.DOTNET_VERSION }}
       uses: actions/setup-dotnet@v3

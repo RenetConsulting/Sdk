@@ -48,7 +48,9 @@ namespace Sdk.Communication.Aws
                     phoneNumberValidateResponse.PhoneNumberE164 = response.NumberValidateResponse.CleansedPhoneNumberE164;
                     phoneNumberValidateResponse.PostalCode = response.NumberValidateResponse.ZipCode;
                     phoneNumberValidateResponse.PhoneType = response.NumberValidateResponse.PhoneType;
-                    phoneNumberValidateResponse.PhoneTypeCode = (PhoneTypeCode)response.NumberValidateResponse.PhoneTypeCode;
+                    phoneNumberValidateResponse.PhoneTypeCode = response.NumberValidateResponse.PhoneTypeCode.HasValue
+                                                ? (PhoneTypeCode)response.NumberValidateResponse.PhoneTypeCode.Value
+                                                : PhoneTypeCode.Invalid;
 
                     logger.LogInformation("Aws Data collected");
                 }

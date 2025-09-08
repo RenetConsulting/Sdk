@@ -16,7 +16,7 @@ namespace Sdk.Communication.Azure
     {
         public async Task<PhoneNumberValidateResponse> PhoneNumberValidateAsync(string phoneNumber)
         {
-            PhoneNumbersClient client = new(azureSmsServiceSettings.Value.ConnectionString, new PhoneNumbersClientOptions(PhoneNumbersClientOptions.ServiceVersion.V2023_05_01_Preview));
+            PhoneNumbersClient client = new(azureSmsServiceSettings.Value.ConnectionString, new PhoneNumbersClientOptions(PhoneNumbersClientOptions.ServiceVersion.V2025_06_01));
 
             Regex phoneNumberRegex = PhoneValidation();
 
@@ -31,7 +31,7 @@ namespace Sdk.Communication.Azure
 
             try
             {
-                OperatorInformationResult searchResult = await client.SearchOperatorInformationAsync(new[] { phoneNumber });
+                OperatorInformationResult searchResult = await client.SearchOperatorInformationAsync([phoneNumber]);
 
                 if (searchResult != null && searchResult.Values != null && searchResult.Values.Count > 0)
                 {

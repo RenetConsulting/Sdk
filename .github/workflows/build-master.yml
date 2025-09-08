@@ -7,8 +7,9 @@ on:
 
 env:
   DOTNET_VERSION: '8.0.x'           # set this to the dotnet version to use
-  SDK_VERSION: '1.1.3'
+  SDK_VERSION: '1.2.2'
   BUILD_NUMBER: ${{github.run_number}}
+  BETA: '' #set empty for production releases
 
 # --- Secrets for the GitHub Action ---
 # ACTION_PACKAGE_API_KEY - this key for Nuget Deployment
@@ -24,9 +25,9 @@ jobs:
     - name: Crete Build number
       id: build
       run: |
-          echo "VERSION_NUMBER_WITH_OFFSET=$SDK_VERSION.$(($BUILD_NUMBER+10000))" >> "$GITHUB_ENV"
+          echo "VERSION_NUMBER_WITH_OFFSET=$SDK_VERSION$BETA.$(($BUILD_NUMBER))" >> "$GITHUB_ENV"
 
-    - uses: actions/checkout@v3
+    - uses: actions/checkout@v5
     
     - name: Setup .NET Core ${{ env.DOTNET_VERSION }}
       uses: actions/setup-dotnet@v3
@@ -43,8 +44,10 @@ jobs:
       run: |
         dotnet pack ./Sdk.Communication/Sdk.Communication.csproj -p:PackageVersion=${{ env.VERSION_NUMBER_WITH_OFFSET }} --no-build --configuration Release --output "./nuget/Sdk.Communication"
         dotnet pack ./Sdk.Communication.Azure/Sdk.Communication.Azure.csproj -p:PackageVersion=${{ env.VERSION_NUMBER_WITH_OFFSET }} --no-build --configuration Release --output "./nuget/Sdk.Communication.Azure"
+        dotnet pack ./Sdk.Communication.Aws/Sdk.Communication.Aws.csproj -p:PackageVersion=${{ env.VERSION_NUMBER_WITH_OFFSET }} --no-build --configuration Release --output "./nuget/Sdk.Communication.Aws"
 
     - name: Publish NuGet Files
       run: |
           dotnet nuget push "./nuget/Sdk.Communication/*.nupkg" --source "nuget.org" --api-key ${{ secrets.ACTION_PACKAGE_API_KEY }}
           dotnet nuget push "./nuget/Sdk.Communication.Azure/*.nupkg" --source "nuget.org" --api-key ${{ secrets.ACTION_PACKAGE_API_KEY }}
+          dotnet nuget push "./nuget/Sdk.Communication.Aws/*.nupkg" --source "nuget.org" --api-key ${{ secrets.ACTION_PACKAGE_API_KEY }}

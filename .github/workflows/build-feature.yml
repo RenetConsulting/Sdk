@@ -4,13 +4,10 @@ on:
   push:
     branches-ignore:
       - main
-      - 'feature/startup-1012'
-      - 'migration/**'
-      - 'net10/**'
 
 env:
-  DOTNET_VERSION: '8.0.x'           # set this to the dotnet version to use
-  SDK_VERSION: '1.2.1'
+  DOTNET_VERSION: '10.0.x'          # set this to the dotnet version to use
+  SDK_VERSION: '2.0.0'
   BUILD_NUMBER: ${{github.run_number}}
   BETA: '-beta'
 
@@ -33,7 +30,7 @@ jobs:
     - uses: actions/checkout@v5
     
     - name: Setup .NET Core ${{ env.DOTNET_VERSION }}
-      uses: actions/setup-dotnet@v3
+      uses: actions/setup-dotnet@v6
       with:
         dotnet-version: ${{ env.DOTNET_VERSION }}
 
